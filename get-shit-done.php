@@ -40,6 +40,7 @@ switch ( $action ) {
 		fwrite($fh, $startToken . PHP_EOL);
 		foreach ( $siteList as $site ) {
 			fwrite($fh, "127.0.0.1\t{$site}" . PHP_EOL);
+			fwrite($fh, "127.0.0.1\twww.{$site}" . PHP_EOL);
 		}
 		fwrite($fh, $endToken . PHP_EOL);
 		
@@ -49,7 +50,6 @@ switch ( $action ) {
 		
 		break;
 	}
-	
 	
 	case 'play': {
 		$hostContents = file($hostsFile);
@@ -64,11 +64,11 @@ switch ( $action ) {
 			}
 		}
 		
-		$hostContents = array_slice($hostContents, 0, $startIndex);
-		
-		file_put_contents($hostsFile, $hostContents);
-		
-		`/etc/init.d/networking restart`;
+		if ( $startIndex > -1 ) {
+			$hostContents = array_slice($hostContents, 0, $startIndex);
+			file_put_contents($hostsFile, $hostContents);
+			`/etc/init.d/networking restart`;
+		}
 		
 		break;
 	}
