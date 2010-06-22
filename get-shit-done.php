@@ -24,6 +24,7 @@ $siteList = array(
 	'yelp.com'
 );
 
+$restartNetworkingCommand = '/etc/init.d/networking restart';
 $hostsFile = '/etc/hosts';
 $startToken = '## start-gsd';
 $endToken = '## end-gsd';
@@ -46,7 +47,7 @@ switch ( $action ) {
 		
 		fclose($fh);
 		
-		`/etc/init.d/networking restart`;
+		shell_exec($restartNetworkingCommand);
 		
 		break;
 	}
@@ -67,7 +68,7 @@ switch ( $action ) {
 		if ( $startIndex > -1 ) {
 			$hostContents = array_slice($hostContents, 0, $startIndex);
 			file_put_contents($hostsFile, $hostContents);
-			`/etc/init.d/networking restart`;
+			shell_exec($restartNetworkingCommand);
 		}
 		
 		break;
