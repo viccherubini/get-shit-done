@@ -5,8 +5,7 @@ if ( 1 == $argc ) {
 	exitWithError("Usage: get-shit-done <work|play>");
 }
 
-$whoami = `whoami`;
-$whoami = trim(strtolower($whoami));
+$whoami = trim(strtolower(`whoami`));
 
 if ( 'root' != strtolower($whoami) ) {
 	exitWithError("Please run script as root.");
