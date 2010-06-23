@@ -2,7 +2,7 @@
 <?php
 
 if ( 1 == $argc ) {
-	exitWithError("Usage: get-shit-done <work|play>");
+	exitWithError("usage: " . $argv[0] . " [work | play]");
 }
 
 $whoami = trim(strtolower(`whoami`));
