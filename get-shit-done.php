@@ -76,7 +76,6 @@ switch ( $action ) {
 }
 
 function exitWithError($error) {
-	echo $error;
-	echo PHP_EOL;
+	fwrite(STDERR, $error . PHP_EOL);
 	exit(1);
 }
