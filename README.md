@@ -11,12 +11,12 @@ Execute it as root because it modifies your hosts file and restarts your network
 ## To no longer get-shit-done
 `sudo get-shit-done play`
 
-## $siteList
+### $siteList
 Add or remove elements of this array for sites to block or unblock.
 
-## $restartNetworkingCommand
+### $restartNetworkingCommand
 Update this variable with the path to your network daemon along with any parameters needed to restart it.
 
-## $hostsFile
+### $hostsFile
 Update this variable to point to the location of your hosts file. Make sure it is an absolute path.
 
