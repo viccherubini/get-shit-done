@@ -20,7 +20,7 @@ $siteList = array(
 	'friendster.com', 'hi5.com', 'linkedin.com',
 	'livejournal.com', 'meetup.com', 'myspace.com',
 	'plurk.com', 'stickam.com', 'stumbleupon.com',
-	'yelp.com', 'slashdot.com'
+	'yelp.com', 'slashdot.org'
 );
 
 $restartNetworkingCommand = '/etc/init.d/networking restart';
