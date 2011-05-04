@@ -23,7 +23,11 @@ $siteList = array(
 	'yelp.com', 'slashdot.com'
 );
 
-$restartNetworkingCommand = 'dscacheutil -flushcache';
+$restartNetworkingCommand = '/etc/init.d/networking restart';
+$uname = `uname -a`;
+if (preg_match('/Darwin/', $uname))
+	$restartNetworkingCommand = 'dscacheutil -flushcache';
+
 $hostsFile = '/etc/hosts';
 $startToken = '## start-gsd';
 $endToken = '## end-gsd';
