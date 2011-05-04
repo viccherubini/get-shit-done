@@ -14,6 +14,11 @@ Execute it as root because it modifies your hosts file and restarts your network
 ### $siteList
 Add or remove elements of this array for sites to block or unblock.
 
+### ~/.get-shit-done.ini
+As an alternative to above, add lines in format
+$sites[] = www.blah.com
+to this file
+
 ### $restartNetworkingCommand
 Update this variable with the path to your network daemon along with any parameters needed to restart it.
 
