@@ -16,7 +16,7 @@ Add or remove elements of this array for sites to block or unblock.
 
 ### ~/.get-shit-done.ini
 As an alternative to above, add lines in format
-$sites[] = www.blah.com
+sites[] = www.blah.com
 to this file
 
 ### $restartNetworkingCommand
