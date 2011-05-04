@@ -32,6 +32,11 @@ $action = $argv[1];
 
 switch ( $action ) {
 	case 'work': {
+		$contents = file_get_contents($hostsFile);
+		if($contents && strpos($contents, $startToken) !== false && strpos($contents, $endToken) !== false) {
+			exitWithError("Work mode already set.");        
+		}
+		
 		$fh = fopen($hostsFile, 'a');
 		if ( false === $fh ) {
 			exitWithError("Failed to open the hosts file.");
