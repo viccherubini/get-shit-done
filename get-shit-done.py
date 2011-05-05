@@ -79,4 +79,7 @@ def main():
         exit_error('Please run script as root.')
     if len(sys.argv) != 2:
         exit_error('usage: ' + sys.argv[0] + ' [work|play]')
-    {"work": work, "play": "play"}[sys.argv[1]]()
+    {"work": work, "play": play}[sys.argv[1]]()
+
+if __name__ == '__main__':
+    main()
