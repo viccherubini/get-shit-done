@@ -11,7 +11,7 @@ def exit_error(error):
     exit(1)
     
 iniFile = path.expanduser(path.join("~", ".get-shit-done.ini"))
-restartNetworkingCommand = ["/etc/init.d/networking", "restart"]
+restartNetworkingCommand = ["sudo", "dscacheutil", "-flushcache"]
 hostsFile = '/etc/hosts'
 startToken = '## start-gsd'
 endToken = '## end-gsd'
