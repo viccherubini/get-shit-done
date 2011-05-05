@@ -25,3 +25,11 @@ Update this variable with the path to your network daemon along with any paramet
 ### $hostsFile
 Update this variable to point to the location of your hosts file. Make sure it is an absolute path.
 
+# Updates
+It's amazing how fast this repository has grown, I had never expected a single link on Hacker News would have caused that! I love it.
+
+I'd really love if anyone wanted to follow some of my other repositories, including [jolt](https://github.com/leftnode/jolt) or [dbmigrator](https://github.com/leftnode/dbmigrator). I think both are promising projects and I know I could use some help on them.
+
+Thanks!
+
+-Vic Cherubini
