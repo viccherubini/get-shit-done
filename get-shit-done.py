@@ -5,9 +5,10 @@ import getpass
 import subprocess
 import os
 from os import path
+from __future__ import print_function
 
 def exit_error(error):
-    print >> sys.stderr, error
+    print(error, file=sys.stderr)
     exit(1)
     
 iniFile = path.expanduser(path.join("~", ".get-shit-done.ini"))
@@ -27,7 +28,7 @@ if os.path.exists(iniFile):
     iniF = open(iniFile)
     try:
         for line in iniF:
-            key, value = map(str.strip, line.split("=", 1))
+            key, value = [each.strip() for each in line.split("=", 1)]
             if key == "sites":
                 siteList = [value]
             elif key == "sites[]":
@@ -45,13 +46,13 @@ def work():
     if startToken in contents and endToken in contents:
         exit_error("Work mode already set.")
 
-    print >> hFile, startToken
+    print(startToken, file=hFile)
 
     for site in siteList:
-        print >> hFile, "127.0.0.1\t" + site
-        print >> hFile, "127.0.0.1\twww." + site
+        print("127.0.0.1\t" + site, file=hFile)
+        print("127.0.0.1\twww." + site, file=hFile)
 
-    print >> hFile, endToken
+    print(endToken, file=hFile)
 
     rehash()
 
@@ -79,4 +80,4 @@ def main():
         exit_error('Please run script as root.')
     if len(sys.argv) != 2:
         exit_error('usage: ' + sys.argv[0] + ' [work|play]')
-    {"work": work, "play": "play"}[sys.argv[1]]()
+    {"work": work, "play": play}[sys.argv[1]]()
