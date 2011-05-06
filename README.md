@@ -19,6 +19,8 @@ As an alternative to above, add lines in format
 sites[] = www.blah.com
 to this file
 
+If you are using the python script, the configuration file can contain list of comma-seperated sites as value to sites key. The duplicates will be removed, and www is prepended to eac
+
 ### $restartNetworkingCommand
 Update this variable with the path to your network daemon along with any parameters needed to restart it.
 

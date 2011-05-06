@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 from __future__ import print_function
 import sys
 import getpass
@@ -10,17 +11,17 @@ def exit_error(error):
     print(error, file=sys.stderr)
     exit(1)
     
-iniFile = path.expanduser(path.join("~", ".get-shit-done.ini"))
+ini_file = path.expanduser(path.join("~", ".get-shit-done.ini"))
 
 if "linux" in sys.platform:
-    restartNetworkingCommand = ["/etc/init.d/networking", "restart"]
+    restart_network_command = ["/etc/init.d/networking", "restart"]
 elif "mac" in sys.platform:
     sys.exit("please place the proper command which does the above in mac")
 
-hostsFile = '/etc/hosts'
-startToken = '## start-gsd'
-endToken = '## end-gsd'
-siteList = ['reddit.com', 'forums.somethingawful.com', 'somethingawful.com',
+hosts_file = '/etc/hosts'
+start_token = '## start-gsd'
+end_token = '## end-gsd'
+site_list = ['reddit.com', 'forums.somethingawful.com', 'somethingawful.com',
             'digg.com', 'break.com', 'news.ycombinator.com', 'infoq.com',
             'bebo.com', 'twitter.com', 'facebook.com', 'blip.com',
             'youtube.com', 'vimeo.com', 'delicious.com', 'flickr.com',
@@ -31,49 +32,50 @@ siteList = ['reddit.com', 'forums.somethingawful.com', 'somethingawful.com',
 def sites_from_ini(ini_file):
     # this enables the ini file to be written like
     # sites = google.com, facebook.com, quora.com ....
-    inif = open(ini_file)
-    try:
-        for line in inif:
+    if os.path.exists(ini_file):
+        ini_file_handle = open(ini_file)
+        for line in ini_file_handle:
             key, value = [each.strip() for each in line.split("=", 1)]
             if key == "sites":
-                siteList.append([each.strip() for each in value.split(",")])
+                site_list.append([each.strip() for each in value.split(",")])
 
 def rehash():
-    subprocess.check_call(restartNetworkingCommand)
+    subprocess.check_call(restart_network_command)
 
 def work():
-    hFile = open(hostsFile, 'a+')
+    hFile = open(hosts_file, 'a+')
     contents = hFile.read()
 
-    if startToken in contents and endToken in contents:
+    if start_token in contents and end_token in contents:
         exit_error("Work mode already set.")
 
-    print(startToken, file=hFile)
+    print(start_token, file=hFile)
 
-    for site in siteList:
+    # remove duplicates by converting list to a set
+    for site in set(site_list):
         print("127.0.0.1\t" + site, file=hFile)
         print("127.0.0.1\twww." + site, file=hFile)
 
-    print(endToken, file=hFile)
+    print(end_token, file=hFile)
 
     rehash()
 
 def play():
-    hFile = open(hostsFile, "r+")
-    lines = hFile.readlines()
+    hosts_file_handle = open(hosts_file, "r+")
+    lines = hosts_file_handle.readlines()
 
     startIndex = -1
 
     for index, line in enumerate(lines):
-        if line.strip() == startToken:
+        if line.strip() == start_token:
             startIndex = index
 
     if startIndex > -1:
         lines = lines[0:startIndex]
 
-        hFile.seek(0)
-        hFile.write(''.join(lines))
-        hFile.truncate()
+        hosts_file_handle.seek(0)
+        hosts_file_handle.write(''.join(lines))
+        hosts_file_handle.truncate()
 
         rehash()
 
@@ -85,5 +87,5 @@ def main():
     {"work": work, "play": play}[sys.argv[1]]()
 
 if __name__ == "__main__":
-    sites_from_ini()
+    sites_from_ini(ini_file)
     main()
