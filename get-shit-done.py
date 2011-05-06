@@ -1,18 +1,22 @@
 #!/usr/bin/env python
-
+from __future__ import print_function
 import sys
 import getpass
 import subprocess
 import os
 from os import path
-from __future__ import print_function
 
 def exit_error(error):
     print(error, file=sys.stderr)
     exit(1)
     
 iniFile = path.expanduser(path.join("~", ".get-shit-done.ini"))
-restartNetworkingCommand = ["/etc/init.d/networking", "restart"]
+
+if "linux" in sys.platform:
+    restartNetworkingCommand = ["/etc/init.d/networking", "restart"]
+elif "mac" in sys.platform:
+    sys.exit("please place the proper command which does the above in mac")
+
 hostsFile = '/etc/hosts'
 startToken = '## start-gsd'
 endToken = '## end-gsd'
@@ -24,17 +28,15 @@ siteList = ['reddit.com', 'forums.somethingawful.com', 'somethingawful.com',
             'meetup.com', 'myspace.com', 'plurk.com', 'stickam.com',
             'stumbleupon.com', 'yelp.com', 'slashdot.com']
 
-if os.path.exists(iniFile):
-    iniF = open(iniFile)
+def sites_from_ini(ini_file):
+    # this enables the ini file to be written like
+    # sites = google.com, facebook.com, quora.com ....
+    inif = open(ini_file)
     try:
-        for line in iniF:
+        for line in inif:
             key, value = [each.strip() for each in line.split("=", 1)]
             if key == "sites":
-                siteList = [value]
-            elif key == "sites[]":
-                siteList.append(value)
-    finally:
-        iniF.close()
+                siteList.append([each.strip() for each in value.split(",")])
 
 def rehash():
     subprocess.check_call(restartNetworkingCommand)
@@ -81,3 +83,7 @@ def main():
     if len(sys.argv) != 2:
         exit_error('usage: ' + sys.argv[0] + ' [work|play]')
     {"work": work, "play": play}[sys.argv[1]]()
+
+if __name__ == "__main__":
+    sites_from_ini()
+    main()
