@@ -31,7 +31,19 @@ if (file_exists($iniFile)) {
 	);
 }
 
-$restartNetworkingCommand = '/etc/init.d/networking restart';
+$uname = trim(`uname`);
+
+if ( $uname == 'Linux' ) {
+    $restartNetworkingCommand = '/etc/init.d/networking restart';
+} elseif ( $uname == 'Darwin' ) {
+    $restartNetworkingCommand = 'dscacheutil -flushcache';
+} else {
+    $message = '"Please contribute DNS cache flush command on GitHub."';
+    $restartNetworkingCommand = "echo $message";
+    # Intention isn't to exit, as it still works, but just requires some
+    # intervention on the user's part.
+}
+
 $hostsFile = '/etc/hosts';
 $startToken = '## start-gsd';
 $endToken = '## end-gsd';

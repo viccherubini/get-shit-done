@@ -17,6 +17,11 @@ if "linux" in sys.platform:
     restart_network_command = ["/etc/init.d/networking", "restart"]
 elif "darwin" in sys.platform:
     restart_network_command = ["dscacheutil", "-flushcache"]
+else:
+    # Intention isn't to exit, as it still works, but just requires some
+    # intervention on the user's part.
+    message = '"Please contribute DNS cache flush command on GitHub."'
+    restart_network_command = ['echo', message]
 
 hosts_file = '/etc/hosts'
 start_token = '## start-gsd'
