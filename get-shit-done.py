@@ -27,7 +27,7 @@ site_list = ['reddit.com', 'forums.somethingawful.com', 'somethingawful.com',
             'youtube.com', 'vimeo.com', 'delicious.com', 'flickr.com',
             'friendster.com', 'hi5.com', 'linkedin.com', 'livejournal.com',
             'meetup.com', 'myspace.com', 'plurk.com', 'stickam.com',
-            'stumbleupon.com', 'yelp.com', 'slashdot.com']
+            'stumbleupon.com', 'yelp.com', 'slashdot.org']
 
 def sites_from_ini(ini_file):
     # this enables the ini file to be written like
