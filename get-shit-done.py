@@ -15,7 +15,7 @@ ini_file = path.expanduser(path.join("~", ".get-shit-done.ini"))
 
 if "linux" in sys.platform:
     restart_network_command = ["/etc/init.d/networking", "restart"]
-elif "mac" in sys.platform:
+elif "darwin" in sys.platform:
     restart_network_command = ["dscacheutil", "-flushcache"]
 
 hosts_file = '/etc/hosts'
