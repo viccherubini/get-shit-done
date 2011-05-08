@@ -16,7 +16,7 @@ ini_file = path.expanduser(path.join("~", ".get-shit-done.ini"))
 if "linux" in sys.platform:
     restart_network_command = ["/etc/init.d/networking", "restart"]
 elif "mac" in sys.platform:
-    sys.exit("please place the proper command which does the above in mac")
+    restart_network_command = ["dscacheutil", "-flushcache"]
 
 hosts_file = '/etc/hosts'
 start_token = '## start-gsd'
