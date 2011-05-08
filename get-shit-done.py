@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
 import sys
 import getpass
 import subprocess
@@ -7,15 +8,25 @@ import os
 from os import path
 
 def exit_error(error):
-    print >> sys.stderr, error
+    print(error, file=sys.stderr)
     exit(1)
     
-iniFile = path.expanduser(path.join("~", ".get-shit-done.ini"))
-restartNetworkingCommand = ["/etc/init.d/networking", "restart"]
-hostsFile = '/etc/hosts'
-startToken = '## start-gsd'
-endToken = '## end-gsd'
-siteList = ['reddit.com', 'forums.somethingawful.com', 'somethingawful.com',
+ini_file = path.expanduser(path.join("~", ".get-shit-done.ini"))
+
+if "linux" in sys.platform:
+    restart_network_command = ["/etc/init.d/networking", "restart"]
+elif "darwin" in sys.platform:
+    restart_network_command = ["dscacheutil", "-flushcache"]
+else:
+    # Intention isn't to exit, as it still works, but just requires some
+    # intervention on the user's part.
+    message = '"Please contribute DNS cache flush command on GitHub."'
+    restart_network_command = ['echo', message]
+
+hosts_file = '/etc/hosts'
+start_token = '## start-gsd'
+end_token = '## end-gsd'
+site_list = ['reddit.com', 'forums.somethingawful.com', 'somethingawful.com',
             'digg.com', 'break.com', 'news.ycombinator.com', 'infoq.com',
             'bebo.com', 'twitter.com', 'facebook.com', 'blip.com',
             'youtube.com', 'vimeo.com', 'delicious.com', 'flickr.com',
@@ -23,54 +34,53 @@ siteList = ['reddit.com', 'forums.somethingawful.com', 'somethingawful.com',
             'meetup.com', 'myspace.com', 'plurk.com', 'stickam.com',
             'stumbleupon.com', 'yelp.com', 'slashdot.org']
 
-if os.path.exists(iniFile):
-    iniF = open(iniFile)
-    try:
-        for line in iniF:
-            key, value = map(str.strip, line.split("=", 1))
+def sites_from_ini(ini_file):
+    # this enables the ini file to be written like
+    # sites = google.com, facebook.com, quora.com ....
+    if os.path.exists(ini_file):
+        ini_file_handle = open(ini_file)
+        for line in ini_file_handle:
+            key, value = [each.strip() for each in line.split("=", 1)]
             if key == "sites":
-                siteList = [value]
-            elif key == "sites[]":
-                siteList.append(value)
-    finally:
-        iniF.close()
+                site_list.append([each.strip() for each in value.split(",")])
 
 def rehash():
-    subprocess.check_call(restartNetworkingCommand)
+    subprocess.check_call(restart_network_command)
 
 def work():
-    hFile = open(hostsFile, 'a+')
+    hFile = open(hosts_file, 'a+')
     contents = hFile.read()
 
-    if startToken in contents and endToken in contents:
+    if start_token in contents and end_token in contents:
         exit_error("Work mode already set.")
 
-    print >> hFile, startToken
+    print(start_token, file=hFile)
 
-    for site in siteList:
-        print >> hFile, "127.0.0.1\t" + site
-        print >> hFile, "127.0.0.1\twww." + site
+    # remove duplicates by converting list to a set
+    for site in set(site_list):
+        print("127.0.0.1\t" + site, file=hFile)
+        print("127.0.0.1\twww." + site, file=hFile)
 
-    print >> hFile, endToken
+    print(end_token, file=hFile)
 
     rehash()
 
 def play():
-    hFile = open(hostsFile, "r+")
-    lines = hFile.readlines()
+    hosts_file_handle = open(hosts_file, "r+")
+    lines = hosts_file_handle.readlines()
 
     startIndex = -1
 
     for index, line in enumerate(lines):
-        if line.strip() == startToken:
+        if line.strip() == start_token:
             startIndex = index
 
     if startIndex > -1:
         lines = lines[0:startIndex]
 
-        hFile.seek(0)
-        hFile.write(''.join(lines))
-        hFile.truncate()
+        hosts_file_handle.seek(0)
+        hosts_file_handle.write(''.join(lines))
+        hosts_file_handle.truncate()
 
         rehash()
 
@@ -79,4 +89,8 @@ def main():
         exit_error('Please run script as root.')
     if len(sys.argv) != 2:
         exit_error('usage: ' + sys.argv[0] + ' [work|play]')
-    {"work": work, "play": "play"}[sys.argv[1]]()
+    {"work": work, "play": play}[sys.argv[1]]()
+
+if __name__ == "__main__":
+    sites_from_ini(ini_file)
+    main()
