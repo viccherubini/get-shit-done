@@ -1,6 +1,7 @@
 #!/bin/sh
 
 EXT=".php"
+DIRNAME=$(dirname $0)
 
 if [ `whoami` != "root" ]
 then
@@ -9,4 +10,5 @@ then
     sudo $0 $*
     exit $?
 fi
-./get-shit-done$EXT $*
+
+$DIRNAME/get-shit-done$EXT $*
