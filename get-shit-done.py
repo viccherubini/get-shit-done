@@ -42,7 +42,8 @@ def sites_from_ini(ini_file):
         for line in ini_file_handle:
             key, value = [each.strip() for each in line.split("=", 1)]
             if key == "sites":
-                site_list.append([each.strip() for each in value.split(",")])
+                for item in [each.strip() for each in value.split(",")]:
+                    site_list.append(item)
 
 def rehash():
     subprocess.check_call(restart_network_command)
