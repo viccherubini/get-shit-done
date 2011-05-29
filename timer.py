@@ -7,15 +7,6 @@ import time
 import threading
 import re
 
-class workManager(threading.Thread):
-	def __init__(self, time):
-		threading.Thread.__init__(self)
-		self.time = time
-	def run(self):
-		get_shit_done.work()
-		time.sleep(self.time)
-		get_shit_done.play()
-
 if __name__ == '__main__':
 	
 	working_time = 0.0
@@ -32,8 +23,7 @@ if __name__ == '__main__':
 					times['s'] = times['s'] + float(arg)
 	
 	working_time = (times['h'] * 3600) + (times['m'] * 60) + times['s']
-		
-	worker = workManager(working_time)
-	worker.daemon = True
-	worker.start()
-	worker.join(5)
+	
+	get_shit_done.work()
+	time.sleep(working_time)
+	get_shit_done.play()
