@@ -9,7 +9,7 @@ def exit_error(error):
     print >> sys.stderr, error
     exit(1)
     
-iniFile = os.expanduser(path.join("~", ".get-shit-done.ini"))
+iniFile = os.path.expanduser(os.path.join("~", ".get-shit-done.ini"))
 restartNetworkingCommand = ["/etc/init.d/networking", "restart"]
 hostsFile = '/etc/hosts'
 startToken = '## start-gsd'
