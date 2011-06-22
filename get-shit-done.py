@@ -20,7 +20,7 @@ siteList = ['reddit.com', 'forums.somethingawful.com', 'somethingawful.com',
             'youtube.com', 'vimeo.com', 'delicious.com', 'flickr.com',
             'friendster.com', 'hi5.com', 'linkedin.com', 'livejournal.com',
             'meetup.com', 'myspace.com', 'plurk.com', 'stickam.com',
-            'stumbleupon.com', 'yelp.com', 'slashdot.com']
+            'stumbleupon.com', 'yelp.com', 'slashdot.com','thedailywtf.com']
 
 if os.path.exists(iniFile):
     iniF = open(iniFile)
@@ -63,7 +63,7 @@ def play():
     for index, line in enumerate(lines):
         if line.strip() == startToken:
             startIndex = index
-
+    print startIndex
     if startIndex > -1:
         lines = lines[0:startIndex]
 
@@ -78,4 +78,8 @@ def main():
         exit_error('Please run script as root.')
     if len(sys.argv) != 2:
         exit_error('usage: ' + sys.argv[0] + ' [work|play]')
-    {"work": work, "play": "play"}[sys.argv[1]]()
+    {"work": work, "play": play}[sys.argv[1]]()
+
+
+if __name__ == '__main__':
+	main()
