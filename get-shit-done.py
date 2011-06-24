@@ -4,6 +4,7 @@ import sys
 import getpass
 import subprocess
 import os
+import json
 
 def exit_error(error):
     print >> sys.stderr, error
@@ -20,17 +21,18 @@ siteList = ['reddit.com', 'forums.somethingawful.com', 'somethingawful.com',
             'youtube.com', 'vimeo.com', 'delicious.com', 'flickr.com',
             'friendster.com', 'hi5.com', 'linkedin.com', 'livejournal.com',
             'meetup.com', 'myspace.com', 'plurk.com', 'stickam.com',
-            'stumbleupon.com', 'yelp.com', 'slashdot.com','thedailywtf.com']
+            'stumbleupon.com', 'yelp.com', 'slashdot.com','thedailywtf.com',
+	    'okcupid.com','craigslist.org','cricinfo.com']
 
 if os.path.exists(iniFile):
     iniF = open(iniFile)
     try:
-        for line in iniF:
-            key, value = map(str.strip, line.split("=", 1))
-            if key == "sites":
-                siteList = [value]
-            elif key == "sites[]":
-                siteList.append(value)
+	iniF_in = iniF.read()
+	iniF_out = json.loads(iniF_in)
+        if iniF_out.has_key ("sites"):
+            siteList = siteList + iniF_out.get("sites")
+	elif iniF_out.has_key ("siteList"):
+	    siteList = iniF_out.get("siteList")
     finally:
         iniF.close()
 
@@ -49,7 +51,6 @@ def work():
     for site in siteList:
         print >> hFile, "127.0.0.1\t" + site
         print >> hFile, "127.0.0.1\twww." + site
-
     print >> hFile, endToken
 
     rehash()
@@ -63,7 +64,6 @@ def play():
     for index, line in enumerate(lines):
         if line.strip() == startToken:
             startIndex = index
-    print startIndex
     if startIndex > -1:
         lines = lines[0:startIndex]
 
@@ -78,7 +78,10 @@ def main():
         exit_error('Please run script as root.')
     if len(sys.argv) != 2:
         exit_error('usage: ' + sys.argv[0] + ' [work|play]')
-    {"work": work, "play": play}[sys.argv[1]]()
+    try:	
+	{"work": work, "play": play}[sys.argv[1]]()
+    except Exception,e:
+	print e
 
 
 if __name__ == '__main__':
