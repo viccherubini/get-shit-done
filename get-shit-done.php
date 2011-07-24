@@ -27,7 +27,7 @@ if (file_exists($iniFile)) {
 		'friendster.com', 'hi5.com', 'linkedin.com',
 		'livejournal.com', 'meetup.com', 'myspace.com',
 		'plurk.com', 'stickam.com', 'stumbleupon.com',
-		'yelp.com', 'slashdot.org'
+		'yelp.com', 'slashdot.org', 'plus.google.com'
 	);
 }
 
