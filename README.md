@@ -15,9 +15,10 @@ Execute it as root because it modifies your hosts file and restarts your network
 Add or remove elements of this array for sites to block or unblock.
 
 ### ~/.get-shit-done.ini
-As an alternative to above, add lines in format
-sites[] = www.blah.com
-to this file
+Make this a json format dictionary. 
+Use{"sites": ["blah.com",""]}
+or if you want to override the list of sites in the program use
+{"siteList": ["blah.com",""]}
 
 ### $restartNetworkingCommand
 Update this variable with the path to your network daemon along with any parameters needed to restart it.
@@ -25,11 +26,3 @@ Update this variable with the path to your network daemon along with any paramet
 ### $hostsFile
 Update this variable to point to the location of your hosts file. Make sure it is an absolute path.
 
-# Updates
-It's amazing how fast this repository has grown, I had never expected a single link on Hacker News would have caused that! I love it.
-
-I'd really love if anyone wanted to follow some of my other repositories, including [jolt](https://github.com/leftnode/jolt) or [dbmigrator](https://github.com/leftnode/dbmigrator). I think both are promising projects and I know I could use some help on them.
-
-Thanks!
-
--Vic Cherubini
