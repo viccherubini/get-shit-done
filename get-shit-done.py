@@ -25,16 +25,16 @@ siteList = ['reddit.com', 'forums.somethingawful.com', 'somethingawful.com',
 	    'okcupid.com','craigslist.org','cricinfo.com']
 
 if os.path.exists(iniFile):
-    iniF = open(iniFile)
-    try:
-	iniF_in = iniF.read()
-	iniF_out = json.loads(iniF_in)
-        if iniF_out.has_key ("sites"):
-            siteList = siteList + iniF_out.get("sites")
-	elif iniF_out.has_key ("siteList"):
-	    siteList = iniF_out.get("siteList")
-    finally:
-        iniF.close()
+	iniF = open(iniFile)
+	try:
+		iniF_in = iniF.read()
+		iniF_out = json.loads(iniF_in)
+		if iniF_out.has_key ("sites"):
+			siteList = siteList + iniF_out.get("sites")
+		elif iniF_out.has_key ("siteList"):
+			siteList =  iniF_out.get("siteList")
+	finally:
+		iniF.close()
 
 def rehash():
     subprocess.check_call(restartNetworkingCommand)
