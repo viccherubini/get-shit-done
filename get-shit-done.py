@@ -48,7 +48,7 @@ def rehash():
     subprocess.check_call(restart_network_command)
 
 def work():
-    hFile = open(hosts_file, 'a+')
+    hFile = open(hosts_file, 'r+')
     contents = hFile.read()
 
     if start_token in contents and end_token in contents:
