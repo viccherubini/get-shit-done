@@ -31,7 +31,7 @@ def ini_to_array(ini_file):
         f = open(ini_file)
         sites = []
         for line in f:
-            key, value = [each.strip() for each in line.parition("=")[::2]]
+            key, value = [each.strip() for each in line.partition("=")[::2]]
             if key == "sites":
                 for item in [each.strip() for each in value.split(",")]:
                     sites.append(item)
