@@ -18,6 +18,8 @@ if "linux" in sys.platform:
     restart_network_command = ["/etc/init.d/networking", "restart"]
 elif "darwin" in sys.platform:
     restart_network_command = ["dscacheutil", "-flushcache"]
+elif "win32" in sys.platform:
+    restart_network_command = ["ipconfig", "/flushdns"]
 else:
     # Intention isn't to exit, as it still works, but just requires some
     # intervention on the user's part.
@@ -40,6 +42,10 @@ def ini_to_array(ini_file):
       return []
 
 hosts_file = '/etc/hosts'
+
+if "win32" in sys.platform:
+    hosts_file = '/Windows/System32/drivers/etc/hosts'
+
 start_token = '## start-gsd'
 end_token = '## end-gsd'
 site_list = ini_to_array(ini_global) + ini_to_array(ini_local)
@@ -85,7 +91,7 @@ def play():
         rehash()
 
 def main():
-    if getpass.getuser() != 'root':
+    if getpass.getuser() != 'root' and 'win32' not in sys.platform:
         exit_error('Please run script as root.')
     if len(sys.argv) != 2:
         exit_error('usage: ' + sys.argv[0] + ' [work|play]')
