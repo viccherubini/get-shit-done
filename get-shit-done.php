@@ -95,5 +95,5 @@ function exitWithError($error) {
 function iniToArray($iniFile) {
   $iniContents = parse_ini_file($iniFile);
 
-  return explode(' ', $iniContents["sites"]);
+  return array_map('trim', explode(',', $iniContents["sites"]));
 }
