@@ -85,6 +85,10 @@ switch ( $action ) {
 
     break;
   }
+
+  default: {
+    exitWithError("usage: " . $argv[0] . " [work | play]");
+  }
 }
 
 function exitWithError($error) {
