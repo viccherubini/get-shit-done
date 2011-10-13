@@ -39,6 +39,22 @@ function work()
     # if no hosts file found...
     [ -e $1 ] || exit_with_error $E_NO_HOSTS_FILE "No hosts file found"
 
+    ini_file="$HOME/.get-shit-done.ini"
+
+    site_list=( 'reddit.com' 'forums.somethingawful.com' 'somethingawful.com'n
+		'digg.com' 'break.com' 'news.ycombinator.com'
+		'infoq.com' 'bebo.com' 'twitter.com'
+		'facebook.com' 'blip.com' 'youtube.com'
+		'vimeo.com' 'delicious.com' 'flickr.com'
+		'friendster.com' 'hi5.com' 'linkedin.com'
+		'livejournal.com' 'meetup.com' 'myspace.com'
+		'plurk.com' 'stickam.com' 'stumbleupon.com'
+		'yelp.com' 'slashdot.org' )
+
+    # add sites from ini file
+    # to site_list array
+    sites_from_ini $ini_file
+
     file=$1
     
     # check if work mode has been set
@@ -111,10 +127,14 @@ function sites_from_ini()
 
         # just save sites variable
         if [ "sites" == $key ]; then
-            sites_arr=$(echo $value | tr ',' "\n")
+            # remove trailing commas
+            clean_arr=$(echo "$value" | sed "s/,*$//")
+            # and leading
+            clean_arr=$(echo "$clean_arr" | sed "s/^,*//")
+            sites_arr=$(echo $clean_arr | tr ',' "\n")
 
             # get array size
-            count=${#sites_arr[*]}
+            count=${#site_list[*]}
 
             # add all sites to global sites array 
             for site in $sites_arr
@@ -137,21 +157,6 @@ curr_user=$(to_lower $curr_user)
 # to change hosts file
 #[ $curr_user == "root" ] || exit_with_error $E_USER_NOT_ROOT "Please, run from root"
 
-ini_file="$HOME/.get-shit-done.ini"
-
-site_list=( 'reddit.com' 'forums.somethingawful.com' 'somethingawful.com'
-		'digg.com' 'break.com' 'news.ycombinator.com'
-		'infoq.com' 'bebo.com' 'twitter.com'
-		'facebook.com' 'blip.com' 'youtube.com'
-		'vimeo.com' 'delicious.com' 'flickr.com'
-		'friendster.com' 'hi5.com' 'linkedin.com'
-		'livejournal.com' 'meetup.com' 'myspace.com'
-		'plurk.com' 'stickam.com' 'stumbleupon.com'
-		'yelp.com' 'slashdot.org' )
-
-# add sites from ini file
-# to site_list array
-sites_from_ini $ini_file
 
 uname=$(trim `uname`)
 
