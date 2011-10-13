@@ -50,10 +50,10 @@ function work()
 
     echo $start_token >> $file
 
-    for site in $site_list
+    for site in "${site_list[@]}"
     do
-        echo "127.0.0.1\t$site\n" >> $file
-        echo "127.0.0.1\twww.$site\n" >> $file
+        echo -e "127.0.0.1\t$site" >> $file
+        echo -e "127.0.0.1\twww.$site" >> $file
     done
 
     echo $end_token >> $file
@@ -111,7 +111,7 @@ function sites_from_ini()
 
         # just save sites variable
         if [ "sites" == $key ]; then
-            sites_arr=$(echo $value | tr ',' '\n')
+            sites_arr=$(echo $value | tr ',' "\n")
 
             # get array size
             count=${#sites_arr[*]}
@@ -139,15 +139,15 @@ curr_user=$(to_lower $curr_user)
 
 ini_file="$HOME/.get-shit-done.ini"
 
-site_list=( 'reddit.com', 'forums.somethingawful.com', 'somethingawful.com',
-		'digg.com', 'break.com', 'news.ycombinator.com',
-		'infoq.com', 'bebo.com', 'twitter.com',
-		'facebook.com', 'blip.com', 'youtube.com',
-		'vimeo.com', 'delicious.com', 'flickr.com',
-		'friendster.com', 'hi5.com', 'linkedin.com',
-		'livejournal.com', 'meetup.com', 'myspace.com',
-		'plurk.com', 'stickam.com', 'stumbleupon.com',
-		'yelp.com', 'slashdot.org' )
+site_list=( 'reddit.com' 'forums.somethingawful.com' 'somethingawful.com'
+		'digg.com' 'break.com' 'news.ycombinator.com'
+		'infoq.com' 'bebo.com' 'twitter.com'
+		'facebook.com' 'blip.com' 'youtube.com'
+		'vimeo.com' 'delicious.com' 'flickr.com'
+		'friendster.com' 'hi5.com' 'linkedin.com'
+		'livejournal.com' 'meetup.com' 'myspace.com'
+		'plurk.com' 'stickam.com' 'stumbleupon.com'
+		'yelp.com' 'slashdot.org' )
 
 # add sites from ini file
 # to site_list array
