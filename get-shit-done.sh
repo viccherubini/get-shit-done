@@ -4,6 +4,7 @@ E_NO_PARAMS=1
 E_USER_NOT_ROOT=2
 E_NO_HOSTS_FILE=3
 E_ALREADY_SET=4
+E_WEIRD_PARAMS=5
 
 function exit_with_error()
 {
@@ -37,11 +38,11 @@ EOF
 function work()
 {
     # if no hosts file found...
-    [ -e $1 ] || exit_with_error $E_NO_HOSTS_FILE "No hosts file found"
+    [ -e "$1" ] || exit_with_error $E_NO_HOSTS_FILE "No hosts file found"
 
     ini_file="$HOME/.get-shit-done.ini"
 
-    site_list=( 'reddit.com' 'forums.somethingawful.com' 'somethingawful.com'n
+    site_list=( 'reddit.com' 'forums.somethingawful.com' 'somethingawful.com'
 		'digg.com' 'break.com' 'news.ycombinator.com'
 		'infoq.com' 'bebo.com' 'twitter.com'
 		'facebook.com' 'blip.com' 'youtube.com'
@@ -55,7 +56,7 @@ function work()
     # to site_list array
     sites_from_ini $ini_file
 
-    file=$1
+    file="$1"
     
     # check if work mode has been set
     if grep $start_token $file &> /dev/null; then
@@ -104,7 +105,7 @@ d
 d
 }"
     # if no hosts file found...
-    [ -e $1 ] || exit_with_error $E_NO_HOSTS_FILE "No hosts file found"
+    [ -e "$1" ] || exit_with_error $E_NO_HOSTS_FILE "No hosts file found"
 
     file=$1
 
@@ -115,7 +116,7 @@ d
 
 function sites_from_ini()
 {
-    [ -e $1 ] || return 1
+    [ -e "$1" ] || return 1
 
     # read all lines from ini file
     while read line
@@ -144,18 +145,18 @@ function sites_from_ini()
             done
         fi
         
-    done < $1
+    done < "$1"
 }
 
 # check for input parameters
 [[ "$#" -eq 0 ]] && exit_with_error $E_NO_PARAMS "No parameters given"
 
-curr_user=$(trim `whoami`)
+curr_user=$(trim $(whoami))
 curr_user=$(to_lower $curr_user)
 
 # run fron root user
 # to change hosts file
-#[ $curr_user == "root" ] || exit_with_error $E_USER_NOT_ROOT "Please, run from root"
+[ $curr_user == "root" ] || exit_with_error $E_USER_NOT_ROOT "Please, run from root"
 
 
 uname=$(trim `uname`)
@@ -182,5 +183,6 @@ case "$action" in
         play $hosts_file; ;;
     "work")
         work $hosts_file; ;;
+        *) exit_with_error $E_WEIRD_PARAMS "Some weird params given" ;;
 esac
 
