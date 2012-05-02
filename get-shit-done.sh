@@ -162,7 +162,7 @@ curr_user=$(to_lower $curr_user)
 uname=$(trim `uname`)
 
 if [ "Linux" == $uname ]; then
-    restart_network="/etc/init.d/network restart"
+    restart_network="/etc/init.d/networking restart"
 elif [ "Darwin" == $uname ]; then
     restart_network="dscacheutil -flushcache"
 else
