@@ -22,7 +22,9 @@ siteList = ['reddit.com', 'forums.somethingawful.com', 'somethingawful.com',
             'friendster.com', 'hi5.com', 'linkedin.com', 'livejournal.com',
             'meetup.com', 'myspace.com', 'plurk.com', 'stickam.com',
             'stumbleupon.com', 'yelp.com', 'slashdot.com','thedailywtf.com',
+            'cricbuzz.com','xkcd.com','smbc-comics.com','oglaf.com','sandraandwoo.com','questionablecontent.net',
 	    'okcupid.com','craigslist.org','cricinfo.com']
+
 
 if os.path.exists(iniFile):
 	iniF = open(iniFile)
