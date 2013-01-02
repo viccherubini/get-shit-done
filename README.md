@@ -18,7 +18,7 @@ Execute it as root because it modifies your hosts file and restarts your network
 
 Add or remove elements of this array for sites to block or unblock.
 
-### ~/.get-shit-done.ini
+### ~/.config/get-shit-done.ini
 
 Appends additional sites to block.  Duplicates will be removed, and www is prepended.
 
