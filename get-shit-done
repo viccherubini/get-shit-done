@@ -1,7 +1,9 @@
 #!/bin/sh
 
 EXT=".php"
-DIRNAME=$(dirname $0)
+file="`readlink -f "$0"`"
+dir="`dirname "$file"`"
+DIRNAME="`readlink -f "$dir"`"
 
 if [ `whoami` != "root" ]
 then
