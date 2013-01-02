@@ -11,7 +11,7 @@ def exit_error(error):
     print(error, file=sys.stderr)
     exit(1)
 
-ini_local = path.expanduser(path.join("~", ".get-shit-done.ini"))
+ini_local = path.expanduser(path.join("~", ".config/get-shit-done.ini"))
 ini_global = './sites.ini'
 
 if "linux" in sys.platform:
