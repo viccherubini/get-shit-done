@@ -40,7 +40,7 @@ function work()
     # if no hosts file found...
     [ -e "$1" ] || exit_with_error $E_NO_HOSTS_FILE "No hosts file found"
 
-    ini_file="$HOME/.get-shit-done.ini"
+    ini_file="$HOME/.config/get-shit-done.ini"
 
     site_list=( 'reddit.com' 'forums.somethingawful.com' 'somethingawful.com'
 		'digg.com' 'break.com' 'news.ycombinator.com'
