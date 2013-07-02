@@ -23,7 +23,7 @@ siteList = ['reddit.com', 'forums.somethingawful.com', 'somethingawful.com',
             'meetup.com', 'myspace.com', 'plurk.com', 'stickam.com',
             'stumbleupon.com', 'yelp.com', 'slashdot.com','thedailywtf.com',
             'cricbuzz.com','xkcd.com','smbc-comics.com','oglaf.com','sandraandwoo.com','questionablecontent.net',
-	    'okcupid.com','craigslist.org','cricinfo.com']
+	        'okcupid.com','craigslist.org','cricinfo.com','hasgeek.com']
 
 
 if os.path.exists(iniFile):
