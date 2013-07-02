@@ -9,7 +9,7 @@ import json
 def exit_error(error):
     print >> sys.stderr, error
     exit(1)
-    
+
 iniFile = os.path.expanduser(os.path.join("~", ".get-shit-done.ini"))
 restartNetworkingCommand = ["/etc/init.d/networking", "restart"]
 hostsFile = '/etc/hosts'
@@ -28,6 +28,7 @@ if os.path.exists(iniFile):
 	iniF = open(iniFile)
 	try:
 		iniF_in = iniF.read()
+                print iniF_in
 		iniF_out = json.loads(iniF_in)
 		if iniF_out.has_key ("sites"):
 			siteList = siteList + iniF_out.get("sites")
@@ -49,8 +50,8 @@ def work():
     print >> hFile, startToken
 
     for site in siteList:
-        print >> hFile, "127.0.0.1\t" + site
-        print >> hFile, "127.0.0.1\twww." + site
+        print >> hFile, "127.0.0.10\t" + site
+        print >> hFile, "127.0.0.10\twww." + site
     print >> hFile, endToken
 
     rehash()
@@ -78,7 +79,7 @@ def main():
         exit_error('Please run script as root.')
     if len(sys.argv) != 2:
         exit_error('usage: ' + sys.argv[0] + ' [work|play]')
-    try:	
+    try:
 	{"work": work, "play": play}[sys.argv[1]]()
     except Exception,e:
 	print e
