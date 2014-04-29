@@ -6,7 +6,7 @@ E_NO_HOSTS_FILE=3
 E_ALREADY_SET=4
 E_WEIRD_PARAMS=5
 
-function exit_with_error()
+exit_with_error()
 {
     # output to stderr
     echo $2 >&2
@@ -16,17 +16,17 @@ function exit_with_error()
     exit $1
 }
 
-function trim()
+trim()
 {
     echo $1
 }
 
-function to_lower()
+to_lower()
 {
     echo $1 | tr '[A-Z]' '[a-z]'
 }
 
-function print_help()
+print_help()
 {
     cat <<EOF
 Usage: `basename $0` [work | play]
@@ -35,7 +35,7 @@ EOF
 
 # just appends sites lines to the
 # end of first param file
-function work()
+work()
 {
     # if no hosts file found...
     [ -e "$1" ] || exit_with_error $E_NO_HOSTS_FILE "No hosts file found"
@@ -78,7 +78,7 @@ function work()
     $restart_network
 }
 
-function play()
+play()
 {
     # removes $start_token-$end_token section
     # in any place of hosts file (not only in the end)
@@ -114,7 +114,7 @@ d
     $restart_network
 }
 
-function sites_from_ini()
+sites_from_ini()
 {
     [ -e "$1" ] || return 1
 
