@@ -2,7 +2,7 @@
 <?php
 
 if ( 1 == $argc ) {
-  exitWithError("usage: " . $argv[0] . " [work | play]");
+  exitWithError("usage: " . $argv[0] . " [work | play | check]");
 }
 
 $whoami = trim(`whoami`);
@@ -86,8 +86,30 @@ switch ( $action ) {
     break;
   }
 
+  case 'check': {
+    $hostContents = file($hostsFile);
+    if ( false === $hostContents ) {
+      exitWithError("Failed to open the hosts file.");
+    }
+
+    $startIndex = -1;
+    for ( $i=0; $i<count($hostContents); $i++ ) {
+      if ( trim($hostContents[$i]) == $startToken ) {
+        $startIndex = $i;
+      }
+    }
+
+    if ( $startIndex > -1 ) {
+      echo "at work.\n";
+    } else {
+      echo "at play.\n";
+    }
+
+    break;
+  }
+
   default: {
-    exitWithError("usage: " . $argv[0] . " [work | play]");
+    exitWithError("usage: " . $argv[0] . " [work | play | check]");
   }
 }
 
