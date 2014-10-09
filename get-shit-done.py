@@ -17,13 +17,12 @@ startToken = '## start-gsd'
 endToken = '## end-gsd'
 siteList = ['reddit.com', 'forums.somethingawful.com', 'somethingawful.com',
             'digg.com', 'break.com', 'news.ycombinator.com', 'infoq.com',
-            'bebo.com', 'twitter.com', 'facebook.com', 'blip.com',
+            'bebo.com', 'twitter.com', '', 'blip.com',
             'youtube.com', 'vimeo.com', 'delicious.com', 'flickr.com',
             'friendster.com', 'hi5.com', 'linkedin.com', 'livejournal.com',
             'meetup.com', 'myspace.com', 'plurk.com', 'stickam.com',
             'stumbleupon.com', 'yelp.com', 'slashdot.com','thedailywtf.com',
-            'cricbuzz.com','xkcd.com','smbc-comics.com','oglaf.com','sandraandwoo.com','questionablecontent.net',
-	        'okcupid.com','craigslist.org','cricinfo.com','hasgeek.com']
+	        'okcupid.com','craigslist.org','','hasgeek.com']
 
 
 if os.path.exists(iniFile):
