@@ -7,7 +7,7 @@ import os
 import json
 
 def exit_error(error):
-    print >> sys.stderr, error
+    print(error)
     exit(1)
 
 iniFile = os.path.expanduser(os.path.join("~", ".get-shit-done.ini"))
@@ -22,7 +22,7 @@ siteList = ['reddit.com', 'forums.somethingawful.com', 'somethingawful.com',
             'friendster.com', 'hi5.com', 'linkedin.com', 'livejournal.com',
             'meetup.com', 'myspace.com', 'plurk.com', 'stickam.com',
             'stumbleupon.com', 'yelp.com', 'slashdot.com','thedailywtf.com',
-	    'facebook.com','okcupid.com','craigslist.org','hasgeek.com',
+        'facebook.com','okcupid.com','craigslist.org','hasgeek.com',
             'questionablecontent.net', 'xkcd.com', 'smbc-comics.com','oglaf.com',
             'limbero.org','existentialcomics.com', 'zenpencils.com','phdcomics.com',
             'lesswrong.com','plus.google.com',
@@ -30,17 +30,17 @@ siteList = ['reddit.com', 'forums.somethingawful.com', 'somethingawful.com',
 
 
 if os.path.exists(iniFile):
-	iniF = open(iniFile)
-	try:
-		iniF_in = iniF.read()
-                print iniF_in
-		iniF_out = json.loads(iniF_in)
-		if iniF_out.has_key ("sites"):
-			siteList = siteList + iniF_out.get("sites")
-		elif iniF_out.has_key ("siteList"):
-			siteList =  iniF_out.get("siteList")
-	finally:
-		iniF.close()
+    iniF = open(iniFile)
+    try:
+        iniF_in = iniF.read()
+        print(iniF_in)
+        iniF_out = json.loads(iniF_in)
+        if iniF_out.has_key ("sites"):
+            siteList = siteList + iniF_out.get("sites")
+        elif iniF_out.has_key ("siteList"):
+            siteList =  iniF_out.get("siteList")
+    finally:
+        iniF.close()
 
 def rehash():
     subprocess.check_call(restartNetworkingCommand)
@@ -48,17 +48,16 @@ def rehash():
 def work():
     hFile = open(hostsFile, 'a+')
     contents = hFile.read()
-
     if startToken in contents and endToken in contents:
         exit_error("Work mode already set.")
-
-    print >> hFile, startToken
-
-    for site in siteList:
-        print >> hFile, "127.0.0.10\t" + site
-        print >> hFile, "127.0.0.10\twww." + site
-    print >> hFile, endToken
-
+        hFile.close()
+    else:
+        hFile.write(startToken + "\n")
+        for site in siteList:
+            hFile.write("127.0.0.10\t" + site + "\n")
+            hFile.write("127.0.0.10\twww." + site + "\n")
+        hFile.write(endToken)
+    hFile.close()
     rehash()
 
 def play():
@@ -85,10 +84,10 @@ def main():
     if len(sys.argv) != 2:
         exit_error('usage: ' + sys.argv[0] + ' [work|play]')
     try:
-	{"work": work, "play": play}[sys.argv[1]]()
-    except Exception,e:
-	print e
+        {"work": work, "play": play}[sys.argv[1]]()
+    except Exception as e:
+        print(e)
 
 
 if __name__ == '__main__':
-	main()
+    main()
