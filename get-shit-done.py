@@ -25,7 +25,7 @@ siteList = ['reddit.com', 'forums.somethingawful.com', 'somethingawful.com',
         'facebook.com','okcupid.com','craigslist.org','hasgeek.com',
             'questionablecontent.net', 'xkcd.com', 'smbc-comics.com','oglaf.com',
             'limbero.org','existentialcomics.com', 'zenpencils.com','phdcomics.com',
-            'lesswrong.com','plus.google.com', 'moneycontrol.com'
+            'lesswrong.com','plus.google.com', 'moneycontrol.com', 'quora.com'
             ]
 
 
