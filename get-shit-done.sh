@@ -109,7 +109,7 @@ d
 
     file=$1
 
-    sed --in-place -e "$sed_script" $file
+    sed -i -e "$sed_script" $file
 
     $restart_network
 }
