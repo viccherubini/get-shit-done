@@ -22,10 +22,11 @@ siteList = ['reddit.com', 'forums.somethingawful.com', 'somethingawful.com',
             'friendster.com', 'hi5.com', 'linkedin.com', 'livejournal.com',
             'meetup.com', 'myspace.com', 'plurk.com', 'stickam.com',
             'stumbleupon.com', 'yelp.com', 'slashdot.com','thedailywtf.com',
-        'facebook.com','okcupid.com','craigslist.org','hasgeek.com',
+            'facebook.com','okcupid.com','craigslist.org','hasgeek.com',
             'questionablecontent.net', 'xkcd.com', 'smbc-comics.com','oglaf.com',
             'limbero.org','existentialcomics.com', 'zenpencils.com','phdcomics.com',
-            'lesswrong.com','plus.google.com', 'moneycontrol.com', 'quora.com'
+            'lesswrong.com','plus.google.com', 'moneycontrol.com', 'quora.com',
+            'primevideo.com', 'netflix.com', 'dotabuff.com'
             ]
 
 
