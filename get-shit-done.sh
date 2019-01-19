@@ -1,5 +1,42 @@
 #!/bin/bash
 
+prgname_=`basename $0`
+
+print_help()
+{
+    cat <<EOF
+Usage: $prgname_ [-hv] [-i ini_file] {work | play}
+
+OPTIONS
+
+  -h|--help
+    Show this help text.
+  -i|--ini-file {file}
+    Path to the ini file containing the list of sites to block.
+EOF
+}
+
+options='hvi:'
+loptions='help,version,ini-file:'
+getopt_out=$(getopt --name $prgname_ --options $options --longoptions $loptions -- "$@")
+if (( $? != 0 )); then exit 1; fi
+eval set -- "$getopt_out"
+
+ini_file=
+while [[ $1 != "--" ]]; do
+    case "$1" in
+        -h|--help)
+            print_help
+            exit 0
+            ;;
+        -i|--ini-file)
+            ini_file=$2
+            shift 2
+            ;;
+    esac
+done
+shift
+
 E_NO_PARAMS=1
 E_USER_NOT_ROOT=2
 E_NO_HOSTS_FILE=3
@@ -26,13 +63,6 @@ to_lower()
     echo $1 | tr '[A-Z]' '[a-z]'
 }
 
-print_help()
-{
-    cat <<EOF
-Usage: `basename $0` [work | play]
-EOF
-}
-
 # just appends sites lines to the
 # end of first param file
 work()
@@ -40,7 +70,7 @@ work()
     # if no hosts file found...
     [ -e "$1" ] || exit_with_error $E_NO_HOSTS_FILE "No hosts file found"
 
-    ini_file="$HOME/.config/get-shit-done.ini"
+    ini_file=${ini_file:-"$HOME/.config/get-shit-done.ini"}
 
     site_list=( 'reddit.com' 'forums.somethingawful.com' 'somethingawful.com'
 		'digg.com' 'break.com' 'news.ycombinator.com'
