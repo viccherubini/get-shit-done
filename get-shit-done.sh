@@ -48,7 +48,7 @@ exit_with_error()
     # output to stderr
     echo $2 >&2
 
-    print_help
+    print_help >&2
 
     exit $1
 }
@@ -87,7 +87,7 @@ work()
     sites_from_ini $ini_file
 
     file="$1"
-    
+
     # check if work mode has been set
     if grep $start_token $file &> /dev/null; then
         if grep $end_token $file &> /dev/null; then
@@ -167,14 +167,14 @@ sites_from_ini()
             # get array size
             count=${#site_list[*]}
 
-            # add all sites to global sites array 
+            # add all sites to global sites array
             for site in $sites_arr
             do
                 site_list[$count]=$site
                 ((count++))
             done
         fi
-        
+
     done < "$1"
 }
 
