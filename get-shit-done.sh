@@ -59,8 +59,8 @@ work()
     file="$1"
     
     # check if work mode has been set
-    if grep $start_token $file &> /dev/null; then
-        if grep $end_token $file &> /dev/null; then
+    if grep "$start_token" $file &> /dev/null; then
+        if grep "$end_token" $file &> /dev/null; then
             exit_with_error $E_ALREADY_SET "Work mode already set."
         fi
     fi
@@ -173,8 +173,8 @@ fi
 ##############################
 
 hosts_file="/etc/hosts"
-start_token="## start-gsd"
-end_token="## end=gsd"
+start_token='## start-gsd'
+end_token='## end=gsd'
 
 action=$1
 
