@@ -17,7 +17,7 @@ ini_local = path.expanduser(path.join("~", ".config/get-shit-done.ini"))
 ini_global = './sites.ini'
 
 if "linux" in sys.platform:
-    restart_network_command = ["/etc/init.d/net.enp4s0", "restart"]
+    restart_network_command = ["/etc/init.d/networking", "restart"]
 elif "darwin" in sys.platform:
     restart_network_command = ["dscacheutil", "-flushcache"]
 elif "win32" in sys.platform:
