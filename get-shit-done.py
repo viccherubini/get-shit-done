@@ -7,9 +7,11 @@ import subprocess
 import os
 from os import path
 
+
 def exit_error(error):
     print(error, file=sys.stderr)
     exit(1)
+
 
 ini_local = path.expanduser(path.join("~", ".config/get-shit-done.ini"))
 ini_global = './sites.ini'
@@ -26,6 +28,7 @@ else:
     message = '"Please contribute DNS cache flush command on GitHub."'
     restart_network_command = ['echo', message]
 
+
 def ini_to_array(ini_file):
     # this enables the ini file to be written like
     # sites = google.com, facebook.com, quora.com ....
@@ -39,7 +42,8 @@ def ini_to_array(ini_file):
                     sites.append(item)
         return sites
     else:
-      return []
+        return []
+
 
 hosts_file = '/etc/hosts'
 
@@ -50,8 +54,10 @@ start_token = '## start-gsd'
 end_token = '## end-gsd'
 site_list = ini_to_array(ini_global) + ini_to_array(ini_local)
 
+
 def rehash():
     subprocess.check_call(restart_network_command)
+
 
 def work():
     hFile = open(hosts_file, 'a+')
@@ -70,6 +76,7 @@ def work():
     print(end_token, file=hFile)
 
     rehash()
+
 
 def play():
     hosts_file_handle = open(hosts_file, "r+")
@@ -90,6 +97,7 @@ def play():
 
         rehash()
 
+
 def main():
     if getpass.getuser() != 'root' and 'win32' not in sys.platform:
         exit_error('Please run script as root.')
@@ -98,7 +106,8 @@ def main():
     try:
         {"work": work, "play": play}[sys.argv[1]]()
     except KeyError:
-        exit_error('usage: ' + sys.argv[0] + ' [work|play]')	
+        exit_error('usage: ' + sys.argv[0] + ' [work|play]')
+
 
 if __name__ == "__main__":
     main()
