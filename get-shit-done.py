@@ -55,6 +55,7 @@ def rehash():
 
 def work():
     hFile = open(hosts_file, 'a+')
+    hFile.seek(0)
     contents = hFile.read()
 
     if start_token in contents and end_token in contents:
