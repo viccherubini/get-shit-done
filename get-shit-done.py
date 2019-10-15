@@ -26,7 +26,8 @@ siteList = ['reddit.com', 'forums.somethingawful.com', 'somethingawful.com',
             'questionablecontent.net', 'xkcd.com', 'smbc-comics.com','oglaf.com',
             'limbero.org','existentialcomics.com', 'zenpencils.com','phdcomics.com',
             'lesswrong.com','plus.google.com', 'moneycontrol.com', 'quora.com',
-            'primevideo.com', 'netflix.com', 'dotabuff.com'
+            'primevideo.com', 'netflix.com', 'dotabuff.com',
+            'kuvera.in', 'smallcase.com', 'smallcase.zerodha.com', 'kite.zerodha.com',
             ]
 
 
