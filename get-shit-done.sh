@@ -75,7 +75,7 @@ work()
 
     echo $end_token >> $file
 
-    $restart_network
+    clean_dns
 }
 
 play()
@@ -111,7 +111,7 @@ d
 
     sed --in-place -e "$sed_script" $file
 
-    $restart_network
+    clean_dns
 }
 
 sites_from_ini()
@@ -161,14 +161,15 @@ curr_user=$(to_lower $curr_user)
 
 uname=$(trim `uname`)
 
+clean_dns() {
 if [ "Linux" == $uname ]; then
-    restart_network="/etc/init.d/networking restart"
+    /etc/init.d/networking restart
 elif [ "Darwin" == $uname ]; then
-    restart_network="dscacheutil -flushcache"
+   dscacheutil -flushcache
 else
-    message="Please, contribute DNS cache flush command on GitHub"
-    restart_network="echo $message"
+    echo "Please, contribute DNS cache flush command on GitHub"
 fi
+}
 
 ##############################
 
