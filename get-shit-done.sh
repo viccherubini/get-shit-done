@@ -52,12 +52,8 @@ work()
 		'plurk.com' 'stickam.com' 'stumbleupon.com'
 		'yelp.com' 'slashdot.org' )
 
-    # add sites from ini file
-    # to site_list array
-    sites_from_ini $ini_file
-
     file="$1"
-    
+
     # check if work mode has been set
     if grep $start_token $file &> /dev/null; then
         if grep $end_token $file &> /dev/null; then
@@ -67,11 +63,18 @@ work()
 
     echo $start_token >> $file
 
-    for site in "${site_list[@]}"
-    do
-        echo -e "127.0.0.1\t$site" >> $file
-        echo -e "127.0.0.1\twww.$site" >> $file
-    done
+    printf '127.0.0.1\t%s\n'     "${site_list[@]}" >> $file
+    printf '127.0.0.1\twww.%s\n' "${site_list[@]}" >> $file
+
+    # Append sites from the ini file by parsing in the following manner:
+    # * Take only the relevant lines begining with "sites ="
+    # * Take the right side of equal sign, remove commas
+    # * and split elements on single lines
+    # * Print the lines prefixed with localhost and www.
+    cat $ini_file \
+        | sed '/^\s*sites\s*=/!d' \
+        | sed 's/^.*=\(.*\)/\1/g;s/,/\n/g;s/ //g' \
+        | sed 's/^/127.0.0.1\t/;p;s/\t/\twww./' >>$file
 
     echo $end_token >> $file
 
@@ -112,40 +115,6 @@ d
     sed --in-place -e "$sed_script" $file
 
     $restart_network
-}
-
-sites_from_ini()
-{
-    [ -e "$1" ] || return 1
-
-    # read all lines from ini file
-    while read line
-    do
-        # split the equals sign
-        arr=( ${line/=/" "} )
-        key=${arr[0]}
-        value=${arr[1]}
-
-        # just save sites variable
-        if [ "sites" == $key ]; then
-            # remove trailing commas
-            clean_arr=$(echo "$value" | sed "s/,*$//")
-            # and leading
-            clean_arr=$(echo "$clean_arr" | sed "s/^,*//")
-            sites_arr=$(echo $clean_arr | tr ',' "\n")
-
-            # get array size
-            count=${#site_list[*]}
-
-            # add all sites to global sites array 
-            for site in $sites_arr
-            do
-                site_list[$count]=$site
-                ((count++))
-            done
-        fi
-        
-    done < "$1"
 }
 
 # check for input parameters
