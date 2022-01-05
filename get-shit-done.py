@@ -23,7 +23,7 @@ siteList = ['reddit.com', 'forums.somethingawful.com', 'somethingawful.com',
             'meetup.com', 'myspace.com', 'plurk.com', 'stickam.com',
             'stumbleupon.com', 'yelp.com', 'slashdot.com','thedailywtf.com',
             'facebook.com','okcupid.com','craigslist.org','hasgeek.com',
-            'limbero.org', 'lesswrong.com','plus.google.com', 'moneycontrol.com', 'quora.com',
+            'limbero.org', 'plus.google.com', 'moneycontrol.com', 'quora.com',
             'primevideo.com', 'netflix.com', 'dotabuff.com',
             ]
 
