@@ -7,7 +7,7 @@ import subprocess
 import os
 import json
 
-ini_local = path.expanduser(path.join("~", ".config/get-shit-done.ini"))
+ini_local = os.path.expanduser(os.path.join("~", ".config/get-shit-done.ini"))
 ini_global = './sites.ini'
 restartNetworkingCommand = ["/etc/init.d/networking", "restart"]
 hostsFile = '/etc/hosts'
