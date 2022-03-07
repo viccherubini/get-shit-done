@@ -1,0 +1,14 @@
+#!/bin/sh
+
+EXT=".php"
+DIRNAME=$(dirname $0)
+
+if [ `whoami` != "root" ]
+then
+    # echo "Performing sudo - I need root to edit your hosts file."
+    # The above message is included if anyone wants it, but it got annoying.
+    sudo $0 $*
+    exit $?
+fi
+
+$DIRNAME/get-shit-done$EXT $*
