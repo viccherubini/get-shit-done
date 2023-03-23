@@ -1,21 +1,39 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from __future__ import print_function
-import sys
 import getpass
+import json
 import subprocess
-import os
+import sys
+
 from os import path
 
 def exit_error(error):
     print(error, file=sys.stderr)
     exit(1)
 
+restartNetworkingCommand = ["/etc/init.d/networking", "restart"]
+hostsFile = '/etc/hosts'
+startToken = '## start-gsd'
+endToken = '## end-gsd'
+siteList = ['reddit.com', 'forums.somethingawful.com', 'somethingawful.com',
+            'digg.com', 'break.com', 'news.ycombinator.com', 'infoq.com',
+            'bebo.com', 'twitter.com', '', 'blip.com',
+            'youtube.com', 'vimeo.com', 'delicious.com', 'flickr.com',
+            'friendster.com', 'hi5.com', 'linkedin.com', 'livejournal.com',
+            'meetup.com', 'myspace.com', 'plurk.com', 'stickam.com',
+            'stumbleupon.com', 'yelp.com', 'slashdot.com','thedailywtf.com',
+            'facebook.com','okcupid.com','craigslist.org','hasgeek.com',
+            'limbero.org', 'lesswrong.com','plus.google.com', 'moneycontrol.com', 'quora.com',
+            'primevideo.com', 'netflix.com', 'dotabuff.com', 'espncricinfo.com'
+            ]
+
+
 ini_local = path.expanduser(path.join("~", ".config/get-shit-done.ini"))
 ini_global = './sites.ini'
 
 if "linux" in sys.platform:
-    restart_network_command = ["/etc/init.d/networking", "restart"]
+    restart_network_command = ["sudo", "/etc/init.d/networking", "restart"]
 elif "darwin" in sys.platform:
     restart_network_command = ["dscacheutil", "-flushcache"]
 elif "win32" in sys.platform:
@@ -29,7 +47,7 @@ else:
 def ini_to_array(ini_file):
     # this enables the ini file to be written like
     # sites = google.com, facebook.com, quora.com ....
-    if os.path.exists(ini_file):
+    if path.exists(ini_file):
         f = open(ini_file)
         sites = []
         for line in f:
@@ -98,7 +116,7 @@ def main():
     try:
         {"work": work, "play": play}[sys.argv[1]]()
     except KeyError:
-        exit_error('usage: ' + sys.argv[0] + ' [work|play]')	
+        exit_error('usage: ' + sys.argv[0] + ' [work|play]')
 
 if __name__ == "__main__":
     main()

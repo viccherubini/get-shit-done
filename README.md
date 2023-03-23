@@ -1,5 +1,4 @@
 # get-shit-done
-
 get-shit-done is an easy to use command line program that blocks websites known to distract us from our work.
 
 After cloning this repository, put it in your $PATH and ensure it is executable.
